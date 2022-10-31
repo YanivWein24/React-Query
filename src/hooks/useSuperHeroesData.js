@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { useQuery } from 'react-query'
 
-const fetchSuperHeros = () => {
+const fetchSuperHeroes = () => {
     return axios.get('http://localhost:4000/superheroes')
 }
 
 export const useSuperHeroesData = (onSuccess, onError) => {
-    return useQuery('super-heros', fetchSuperHeros,
+    return useQuery('super-heroes', fetchSuperHeroes,
         {
             //? cacheTime: 5000, // optional, the default is 5 minutes
             //? refetchInterval: 5000, // refetch every 5 seconds 
@@ -22,12 +22,12 @@ export const useSuperHeroesData = (onSuccess, onError) => {
             // we can use this if we want to fetch data on user *click*, instead of fetching on mount.
             onSuccess, // short for - onSuccess: onSuccess
             onError,  // short for - onError: onError
-            select: (data) => {
-                const superHeroNames = data.data.map((hero) => hero.name)
-                return superHeroNames
-                // the 'select' configuration receives the response data as argument, and is used to select or filter
-                // the data we receive. the value we return here will be the the 'final' data we'll use.
-            }
+            // select: (data) => {
+            //     const superHeroNames = data.data.map((hero) => hero.name)
+            //     return superHeroNames
+            // the 'select' configuration receives the response data as argument, and is used to select or filter
+            // the data we receive. the value we return here will be the the 'final' data we'll use.
+            // }
         }
     )
 }
