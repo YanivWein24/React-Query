@@ -5,6 +5,14 @@ const fetchSuperHeros = () => {
   return axios.get('http://localhost:4000/superheroes')
 }
 
+const onSuccess = (data) => {
+  console.log('Perform side effect after data fetching', data.data)
+}
+
+const onError = (error) => {
+  console.log('Perform side effect after encountering error:', error.message)
+}
+
 export const RQSuperHeroesPage = () => {
   const { isLoading, data, isError, error, isFetching, refetch } = useQuery('super-heros', fetchSuperHeros,
     {
@@ -20,6 +28,14 @@ export const RQSuperHeroesPage = () => {
       // a background refetch is initiated (meaning we won't need to refresh the tab to get the updated data)
       enabled: false, // true by default
       // we can use this if we want to fetch data on user *click*, instead of fetching on mount
+      onSuccess, // short for - onSuccess: onSuccess
+      onError,  // short for - onError: onError
+      select: (data) => {
+        const superHeroNames = data.data.map((hero) => hero.name)
+        return superHeroNames
+        // the 'select' configuration receives the response data as argument, and is used to select or filter
+        // the data we receive. the value we return here will be the the 'final' data we'll use.
+      }
     }
   )
 
@@ -37,9 +53,14 @@ export const RQSuperHeroesPage = () => {
     <>
       <h2> RQ Super Heros Page</h2>
       <button onClick={refetch}>Fetch Heroes</button>
-      {data?.data.map((heros) => {
+      {/* {data?.data.map((heros) => {
         return <div key={heros.name}>{heros.name}</div>
-      })}
+      })} */}
+      {
+        data.map(heroName => {
+          return <div key={heroName}>{heroName}</div>
+        })
+      }
     </>
   )
 }
