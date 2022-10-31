@@ -8,6 +8,6 @@ const fetchSuperHero = (heroId) => {
 export const useSuperHeroData = (heroId) => {
     return useQuery(['super-hero', heroId], () => fetchSuperHero(heroId),
         {
-            refetchInterval: 10000, // refetch every 5 seconds 
+            refetchInterval: 5000, // refetch every 5 seconds 
         })
 }
