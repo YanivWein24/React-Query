@@ -1,8 +1,12 @@
 import axios from 'axios'
-import { useQuery } from 'react-query'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
 
 const fetchSuperHeroes = () => {
     return axios.get('http://localhost:4000/superheroes')
+}
+
+const addSuperHeroes = (hero) => {
+    return axios.post('http://localhost:4000/superheroes', hero)
 }
 
 export const useSuperHeroesData = (onSuccess, onError) => {
@@ -18,7 +22,7 @@ export const useSuperHeroesData = (onSuccess, onError) => {
             refetchOnMount: true, // true by default - the query will refetch on mount if the data is stale
             refetchOnWindowFocus: true, // true by default - any time the tab loses focus and gains focus again,
             // a background refetch is initiated (meaning we won't need to refresh the tab to get the updated data)
-            enabled: false, // true by default
+            enabled: true, // true by default
             // we can use this if we want to fetch data on user *click*, instead of fetching on mount.
             onSuccess, // short for - onSuccess: onSuccess
             onError,  // short for - onError: onError
@@ -30,4 +34,14 @@ export const useSuperHeroesData = (onSuccess, onError) => {
             // }
         }
     )
+}
+
+export const useAddSuperHeroesData = () => {
+    const queryClient = useQueryClient()
+    return useMutation(addSuperHeroes, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('super-heroes')
+            //? Refetch updated data on success 
+        }
+    })
 }
