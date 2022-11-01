@@ -34,5 +34,17 @@
       "id": 3,
       "name": "Rachel Green"
     }
-  ]
+  ],
+  "users": [
+    {
+    "id": "john@doe.com",
+    "channelId": "JohnDoe"
+  }
+],
+  "channels": [
+    {
+    "id": "JohnDoe",
+    "courses": ["react", "vue", "angular"]
+  }
+]
 }
