@@ -1,12 +1,15 @@
 import axios from 'axios'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
+import { request } from './../utils/axios-utils';
 
 const fetchSuperHeroes = () => {
-    return axios.get('http://localhost:4000/superheroes')
+    // return axios.get('http://localhost:4000/superheroes')
+    return request({ url: '/superheroes' })
 }
 
 const addSuperHeroes = (hero) => {
-    return axios.post('http://localhost:4000/superheroes', hero)
+    // return axios.post('http://localhost:4000/superheroes', hero)
+    return request({ url: '/superheroes', method: 'post', data: hero })
 }
 
 export const useSuperHeroesData = (onSuccess, onError) => {
@@ -43,6 +46,7 @@ export const useAddSuperHeroesData = () => {
             //! 'data' refers to the *entire* response from the POST request
             // queryClient.invalidateQueries('super-heroes')
             //? Refetch updated data on success 
+            //* OR
             queryClient.setQueriesData('super-heroes', (oldQueryData) => {
                 return {
                     ...oldQueryData,
