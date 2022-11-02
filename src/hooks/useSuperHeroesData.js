@@ -39,9 +39,19 @@ export const useSuperHeroesData = (onSuccess, onError) => {
 export const useAddSuperHeroesData = () => {
     const queryClient = useQueryClient()
     return useMutation(addSuperHeroes, {
-        onSuccess: () => {
-            queryClient.invalidateQueries('super-heroes')
+        onSuccess: (data) => {
+            //! 'data' refers to the *entire* response from the POST request
+            // queryClient.invalidateQueries('super-heroes')
             //? Refetch updated data on success 
+            queryClient.setQueriesData('super-heroes', (oldQueryData) => {
+                return {
+                    ...oldQueryData,
+                    data: [...oldQueryData.data, data.data]
+                    // this function automatically accepts the "old" data, and we use the response from the 
+                    // POST request to to update the data we have without firing another refetch
+                    // (instead of 'queryClient.invalidateQueries')
+                }
+            })
         }
     })
 }
