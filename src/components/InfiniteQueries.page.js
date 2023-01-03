@@ -16,6 +16,7 @@ export const InfiniteQueriesPage = () => {
     fetchNextPage,
     isFetching,
     isFetchingNextPage,
+    isSuccess
   } = useInfiniteQuery(["colors"], fetchColors, {
     getNextPageParam: (lastPage, pages) => {
       if (pages.length < 4) {
@@ -36,7 +37,7 @@ export const InfiniteQueriesPage = () => {
   return (
     <>
       <h2>Infinite Queries Page</h2>
-      {data?.pages.map((group, index) => {
+      {isSuccess && data.pages.map((group, index) => {
         return (
           <div key={index}>
             {group.data.map((color) => (

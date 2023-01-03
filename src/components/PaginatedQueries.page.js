@@ -8,7 +8,7 @@ const fetchColors = (pageNumber) => {
 
 export const PaginatedQueriesPage = () => {
   const [pageNumber, setPageNumber] = useState(1);
-  const { isLoading, isError, error, data, isFetching } = useQuery(
+  const { isLoading, isError, error, data, isFetching, isSuccess } = useQuery(
     ["colors", pageNumber],
     () => fetchColors(pageNumber),
     {
@@ -29,7 +29,7 @@ export const PaginatedQueriesPage = () => {
   return (
     <>
       <h2>Paginated Queries Page</h2>
-      {data?.data.map((color) => {
+      {isSuccess && data.data.map((color) => {
         return (
           <div key={color.id}>
             {color.id}. {color.label}

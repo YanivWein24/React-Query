@@ -19,6 +19,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "dev": "concurrently \"npm run serve-json\" \"npm start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "serve-json": "json-server --watch db.json --port 4000",
@@ -42,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
   }
 }

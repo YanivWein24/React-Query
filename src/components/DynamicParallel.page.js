@@ -22,15 +22,15 @@ export const DynamicParallelPage = ({ heroesIds }) => {
     <>
       <h2>Dynamic Parallel Page</h2>
       {queryResults.map((query) => {
-        const { isLoading } = query;
+        const { isLoading, isSuccess } = query;
         return (
-          <div key={query.data?.data.id}>
+          isSuccess && <div key={query.data.data.id}>
             {isLoading && <h4>Loading Hero...</h4>}
             {query.data && (
               <p>
-                Id: {query.data?.data.id} &nbsp; Name:{" "}
-                <Link to={`/rq-super-heroes/${query.data?.data.id}`}>
-                  {query.data?.data.name}
+                Id: {query.data.data.id} &nbsp; Name:{" "}
+                <Link to={`/rq-super-heroes/${query.data.data.id}`}>
+                  {query.data.data.name}
                 </Link>
               </p>
             )}

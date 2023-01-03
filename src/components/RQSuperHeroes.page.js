@@ -17,7 +17,7 @@ export const RQSuperHeroesPage = () => {
     console.log("Perform side effect after encountering error:", error.message);
   };
 
-  const { isLoading, data, isError, error, isFetching, refetch } =
+  const { isLoading, data, isError, error, isFetching, refetch, isSuccess } =
     useSuperHeroesData(onSuccess, onError);
 
   const { mutate: addHero } = useAddSuperHeroesData(); // we get the 'mutate' function from our hook
@@ -45,18 +45,13 @@ export const RQSuperHeroesPage = () => {
       <button onClick={refetch}>Fetch Heroes</button>
       {(isLoading || isFetching) && <h2>Loading...</h2>}
       {isError && <h2>{error.message}</h2>}
-      {data?.data.map((hero) => {
+      {isSuccess && data.data.map((hero) => {
         return (
           <div key={hero.id}>
             <Link to={`/rq-super-heroes/${hero.id}`}>{hero.name}</Link>
           </div>
         );
       })}
-      {/* {
-        data.map(heroName => {
-          return <div key={heroName}>{heroName}</div>
-        })
-      } */}
     </>
   );
 };
